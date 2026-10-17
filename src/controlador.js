@@ -18,13 +18,31 @@ export class NotasControlador {
     this.#modelo = modelo;
     this.#vista = vista;
 
-    // TODO 4A: regístrate en la Vista (vista.alAgregar, vista.alEliminar, vista.alCalificar).
-    //          Cada manejador convierte los datos (la Vista entrega TEXTO; el Modelo espera números y null)
-    //          y le da la orden al Modelo.
+    this.#vista.alAgregar((datos) => this.#ejecutar(() => {
+      this.#modelo.agregar(datos);
+      this.#vista.limpiarFormulario();
+    }));
+
+    this.#vista.alEliminar((id) => this.#ejecutar(() => {
+      this.#modelo.eliminar(id);
+    }));
+
+    this.#vista.alCalificar((id, textoNota) => this.#ejecutar(() => {
+      this.#modelo.calificar(id, textoNota);
+    }));
   }
 
-  // TODO 4B: un método privado que ejecute una orden al Modelo y, si lanza un ErrorDeReglas, le pida a la Vista
-  //          que muestre el mensaje (y que se redibuje, para deshacer lo que el usuario escribió y el Modelo no aceptó).
-  //          Los errores que NO sean de reglas no se esconden: se vuelven a lanzar.
-  //          Si todo sale bien: limpia el error. Para "agregar", además limpia el formulario.
+  #ejecutar(accion) {
+    try {
+      this.#vista.limpiarError();
+      accion();
+    } catch (error) {
+      if (error instanceof ErrorDeReglas) {
+        this.#vista.mostrarError(error.message);
+        this.#vista.render();
+      } else {
+        throw error;
+      }
+    }
+  }
 }

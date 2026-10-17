@@ -16,18 +16,18 @@ Clasifica cada fragmento de `espagueti.html`: **M** (Modelo), **V** (Vista), **C
 
 | # | Fragmento | Rol(es) | ¿Por qué? |
 |---|---|---|---|
-| 1 | `var n = document.getElementById('nombre').value.trim();` | | |
-| 2 | `if (isNaN(p) \|\| p < 1 \|\| p > 100) { err.textContent = 'El peso debe estar entre 1 y 100.'; return; }` | | |
-| 3 | `if (total + p > 100) { err.textContent = '...'; return; }` | | |
-| 4 | `evals.push({ id: sig++, nombre: n, peso: p, nota: nota });` | | |
-| 5 | `localStorage.setItem('notas.v1', JSON.stringify(evals));` | | |
-| 6 | `document.getElementById('nombre').value = '';` | | |
-| 7 | `'<input ... onchange="ponerNota(' + e.id + ', this.value)">'` | | |
-| 8 | `nec = Math.ceil(nec * 100 - 1e-9) / 100;` | | |
-| 9 | `if (acum + 1e-9 >= 3.0) { txt = '¡Aprobado! ...'; cls = 'ok'; }` | | |
-| 10 | `document.getElementById('tabla').innerHTML = filas;` | | |
-| 11 | `function borrar(id) { ...splice...; localStorage.setItem(...); pintar(); }` | | |
-| 12 | `(e.peso * e.nota / 100).toFixed(2)` | | |
+| 1 | `var n = document.getElementById('nombre').value.trim();` | | | Vista porque lee el valoraz de una interfaz de usuario
+| 2 | `if (isNaN(p) \|\| p < 1 \|\| p > 100) { err.textContent = 'El peso debe estar entre 1 y 100.'; return; }` | | | Mezcla porque realiza una validación de entrada, detiene la ejecucion si no cumple los valores y actualiza el texto del mensaje de error en pantalla
+| 3 | `if (total + p > 100) { err.textContent = '...'; return; }` | | | Mezcla, valida que esta bajo a 100, interrumple el flujo y modifica directamente
+| 4 | `evals.push({ id: sig++, nombre: n, peso: p, nota: nota });` | | |   Modelo, porque manipula la estructura y el almacenamiento de los datos
+| 5 | `localStorage.setItem('notas.v1', JSON.stringify(evals));` | | | Modelo, Gestiona la congruencia de los datos en el almacenamiento local
+| 6 | `document.getElementById('nombre').value = '';` | | |Vista, porque modifica el estado visual limpiando el campo
+| 7 | `'<input ... onchange="ponerNota(' + e.id + ', this.value)">'` | | | Mezcla VC, tiene la interfaz enlazandolo  a una funcion logica
+| 8 | `nec = Math.ceil(nec * 100 - 1e-9) / 100;` | | | Modelo, Es una regla de negocio
+| 9 | `if (acum + 1e-9 >= 3.0) { txt = '¡Aprobado! ...'; cls = 'ok'; }` | | | Mezcla MV, evalua que la regla de negocio se cumpla y muestra el aprobado en pantalla 
+| 10 | `document.getElementById('tabla').innerHTML = filas;` | | | Visual porque inserta el html para mostrar los datos
+| 11 | `function borrar(id) { ...splice...; localStorage.setItem(...); pintar(); }` | | |  Mezcla porque elimina el dato, coordina el evento y fuerza la muestra en pantalla
+| 12 | `(e.peso * e.nota / 100).toFixed(2)` | | | Mezcla MV realiza un calculo y aplica el formato para mostrar en pantalla
 
 ## 2. Olores del espagueti (Parte 1)
 
@@ -56,13 +56,13 @@ Dibuja (a mano y pega una foto, o con texto/Mermaid) el recorrido completo desde
 **Salida de `npm test`** (pega el final, donde dice cuántas pruebas pasan):
 
 ```text
-
+![alt text](image.png)
 ```
 
 **Salida de `npm run arquitectura`:**
 
 ```text
-
+![alt text](image-1.png)
 ```
 
 **Captura de pantalla** de la app con las dos vistas (la tabla/resumen y el termómetro): _(pega la imagen o su enlace)_
